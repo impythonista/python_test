@@ -1,0 +1,26 @@
+#search_input{
+  width: 25%;
+  margin-top: 20px;
+}
+#div_search{
+  padding-left: 10px;
+}
+.btn-info {
+  margin-left: 10px;
+}
+.pagination{
+  float: right !important;
+  padding-right: 10px !important;
+}
+.search-form .form-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.search-form .btn-info {
+  margin: 0 0 0 -4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.help-block {
+  color: #a94442;
+}

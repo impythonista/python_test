@@ -1,0 +1,89 @@
+{% extends 'clients/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block content %}
+  <div class="container">
+    <div id="contact_table">
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <div class="form-inline search-form">
+            <div class="form-group">
+            {% if search_value %}
+              <input id="search_txt" type="text" class="form-control" placeholder="Search...." aria-label="Search...." aria-describedby="basic-addon2" value={{search_value}}>
+            {% else %}
+              <input id="search_txt" type="text" class="form-control" placeholder="Search...." aria-label="Search...." aria-describedby="basic-addon2">
+            {% endif %}
+            </div>
+            <button id="search_btn" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search" autofocus></span>{% trans 'Search' %}</button>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12 text-right">
+          <a href="{% url 'add_clients' %}" class="btn btn-info" role="button">{% trans 'Add More..' %}</a>
+        </div>
+      </div>
+    <br>
+
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>{% trans 'Serial No.' %}</th>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Street Name' %}</th>
+          <th>{% trans 'Suburb' %}</th>
+          <th>{% trans 'Postcode' %}</th>
+          <th>{% trans 'State' %}</th>
+          <th>{% trans 'Contact Name' %}</th>
+          <th>{% trans 'Email' %}</th>
+          <th>{% trans 'Phone Number' %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="client_table">
+        {% for client in clients %}
+          <tr>
+            {% if clients.number %}
+              <td>{{ forloop.counter|count_filter:clients.number }}</td>
+            {% else %}
+              <td>{{ forloop.counter }}</td>
+            {% endif %}
+            <td>{{ client.name }}</td>
+            <td>{{ client.street_name }}</td>
+            <td>{{ client.suburb }}</td>
+            <td>{{ client.postcode }}</td>
+            <td>{{ client.state }}</td>
+            <td>{{ client.contact_name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone_number }}</td>
+            <td><a href="{% url 'edit_client' client.id %}" class="btn btn-info btn-sm" role="button">{% trans 'Edit' %}</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    {% if clients.has_other_pages %}
+      <ul class="pagination">
+        {% if clients.has_previous %}
+          <li><a href="?page={{ clients.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in clients.paginator.page_range %}
+          {% if clients.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if clients.has_next %}
+          <li><a href="?page={{ clients.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  </div>
+
+{% endblock %}

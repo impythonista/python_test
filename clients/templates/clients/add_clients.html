@@ -1,0 +1,55 @@
+{% extends 'clients/base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block search %}
+{% endblock %}
+
+{% block content %}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-sm-2 col-xs-12"></div>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <h3><a href="{% url 'clients' %}">Clients</a></h3>
+        <div class="panel panel-default">
+          {% if action == 'add' %}
+            <div class="panel-heading"><b>{% trans 'Add new client' %}</b></div>
+          {% else %}
+            <div class="panel-heading"><b>{% trans 'Edit client' %}</b></div>
+          {% endif %}
+        <div class="panel-body">
+          <form method="post" class="form-horizontal">
+            {% csrf_token %}
+
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="control-label col-sm-3">{{ field.label }}</label>
+                  <div class="col-sm-9">
+                    {{ field|add_class:'form-control' }}
+                  </div>
+                {% for error in field.errors %}
+                <span class="help-block col-sm-offset-3 col-sm-9">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% endfor %}
+
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span>{% trans ' Save' %}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-2 col-xs-12"></div>
+    </div>
+  </div>
+{% endblock %}
