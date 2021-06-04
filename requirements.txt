@@ -1,5 +1,5 @@
 Babel==2.7.0
-Django==2.2.7
+Django==2.2.21
 django-phone-field==1.8.0
 django-phonenumber-field==3.0.1
 django-widget-tweaks==1.4.5
